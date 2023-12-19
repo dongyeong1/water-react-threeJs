@@ -10,10 +10,11 @@ import HeaderMenu from './components/HeaderMenu';
 import { Suspense } from 'react';
 import styled from 'styled-components';
 const LazyDashBoard=React.lazy(()=>import('./pages/Dashboard'))
-const LazyDetailPage=React.lazy(()=>import('./pages/Energy'))
+const LazyDetailPage=React.lazy(()=>import('./pages/Detail'))
 const LazyNotFound=React.lazy(()=>import('./pages/NotFound'))
 const LazyMain=React.lazy(()=>import('./pages/Main'))
 const LazySimulation=React.lazy(()=>import('./pages/Simulation'))
+const LazyLogin=React.lazy(()=>import('./pages/Login'))
 
   const SpinWrapper=styled.div`
       width: auto;
@@ -29,7 +30,8 @@ transform: translate(-50%, -50%);
 
 function App() {
   return (
-    <div className="App">
+    <>
+<div className="App">
       <BrowserRouter>
       <HeaderMenu></HeaderMenu>
       <SideMenu></SideMenu>
@@ -44,12 +46,14 @@ function App() {
     }
   /></SpinWrapper>}>
             <Routes>
-    <Route path='/dashboard' element={<LazyDashBoard></LazyDashBoard>}></Route>
-    <Route path='/simulation' element={<LazySimulation></LazySimulation>}></Route>
+    {/* <Route path='/dashboard' element={<LazyDashBoard></LazyDashBoard>}></Route> */}
     <Route path='/' element={<LazyMain></LazyMain>}></Route>
-    <Route path='/energy' element={<LazyDetailPage></LazyDetailPage>}></Route>
-    <Route path='*' element={<LazyNotFound
-></LazyNotFound>}></Route>
+    <Route path='/detail/:id' element={<LazyDetailPage></LazyDetailPage>}></Route>
+    <Route path='/simulation' element={<LazySimulation></LazySimulation>}></Route>
+    <Route path='/login' element={<LazyLogin></LazyLogin>}></Route>
+    <Route path='*' element={<LazyNotFound></LazyNotFound>}>
+    {/* <Route path='/' element={<LazyMain></LazyMain>}></Route> */}
+   </Route>
 
 </Routes>
           </Suspense>
@@ -58,6 +62,8 @@ function App() {
     </BrowserRouter>
      <div></div>
     </div>
+    </>
+    
   );
 }
 

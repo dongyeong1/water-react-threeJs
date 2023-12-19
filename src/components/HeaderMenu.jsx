@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const HeaderWrapper=styled.div`
@@ -13,6 +14,7 @@ const HeaderWrapper=styled.div`
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid gray;
+    z-index: 1000;
 
 `
 
@@ -34,14 +36,19 @@ color:white;
 const HeaderLogin=styled.div`
     width:100px;
     height: 40px;
-    background-color:#10194D;;
+    background-color:#10194D;
     border-radius: 20px;
     font-weight: 600;
     display: flex;
     justify-content:center;
     align-items: center;
-    color: white;
     margin-right: 50px;
+    a{
+        text-decoration-line: none;
+        color: white;
+        font-size: 16px;
+
+    }
 `
 const HeaderMenu = () => {
     // let today=new Date();
@@ -66,7 +73,7 @@ useEffect(()=>{
     <HeaderDate><span>현재시간</span>&nbsp;<span>{timeState.getFullYear()+'-'+timeState.getMonth()+'-'+timeState.getDate()}</span>&nbsp;<span>{timeState.getHours()+':'+timeState.getMinutes()+':'+timeState.getSeconds()}</span></HeaderDate>
     <HeaderTitle>스마트 정수장 AI 플랫폼</HeaderTitle>
 
-<HeaderLogin>Login</HeaderLogin>
+<HeaderLogin ><Link to='/login'>Login</Link></HeaderLogin>
 
     </HeaderWrapper>
   )

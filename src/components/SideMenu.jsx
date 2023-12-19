@@ -4,13 +4,13 @@ import styled, { keyframes,css  } from 'styled-components'
 import { useNavigate } from "react-router-dom";
 
 const SideMenuWrapper=styled.div`
-padding: 10px;
+padding: 60px 10px 10px 10px;
     position: fixed;
     left:0%;
     top: 0%;
     width:120px;
     height: 100vh;
-    background-color: #1F2B4E;
+    background-color: blue;
     transition: all 0.1;
     opacity: 0.7;
     z-index: 100;
@@ -36,6 +36,8 @@ const HeaderLogo=styled.div`
 
 const HeaderText=styled.div`
 margin-right: 100px;
+font-size: 13px;
+width:50px;
 
 `
 
@@ -123,22 +125,24 @@ const SideMenu = () => {
 
     const toMain=()=>{
         
-        navigate('/main')
+        // navigate('/')
         window.location.replace("/")
     }
   return (
     <div>
     <SideMenuWrapper onMouseOut={()=>setCloseMenu(true)} onMouseOver={()=>setCloseMenu(false)} closeMenu={closeMenu} >
         <HeaderWrapper>
-            <HeaderLogo ></HeaderLogo>
-            <HeaderText>{!closeMenu&&'수자원공사'}</HeaderText>
+            {/* <HeaderLogo ></HeaderLogo> */}
+            {/* <HeaderText>{!closeMenu&&'수자원공사'}</HeaderText> */}
             <HeaderIcon closeMenu={closeMenu} onClick={()=>setCloseMenu(prev=>!prev)}>></HeaderIcon>
         </HeaderWrapper>
         <MenuWrapper>
         <DashboardMenu><Link  to='/dashboard'>{!closeMenu&&'대쉬보드'}</Link></DashboardMenu>
-        <SimulationMenu><Link to='/energy'>{!closeMenu&&'상세페이지'}</Link></SimulationMenu>
+        {/* <SimulationMenu><Link to='/energy'>{!closeMenu&&'상세페이지'}</Link></SimulationMenu> */}
         
         <EnergyMenu><Link to='/simulation'>{!closeMenu&&'시뮬레이션'}</Link></EnergyMenu>
+        <EnergyMenu><Link to='/login'>{!closeMenu&&'로그인'}</Link></EnergyMenu>
+
             <LoginMenu><div onClick={toMain} >{!closeMenu&&'메인페이지'}</div></LoginMenu>
 
         </MenuWrapper>

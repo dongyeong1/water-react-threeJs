@@ -1,11 +1,16 @@
-import React,{Suspense, useEffect, useRef, useState } from 'react'
+import React,{Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { PieChart, Pie,Cell, LineChart, Line, XAxis, YAxis, Label, ComposedChart, Bar } from 'recharts';
 import {Canvas,useLoader } from '@react-three/fiber';
-import {OrbitControls,Html, useProgress, useTexture} from '@react-three/drei';    
+import {OrbitControls,Html, useProgress, useTexture, useFBX} from '@react-three/drei';    
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { phData,jeonData,alData,ondoData,takdoData } from '../data/data';
 import { TextureLoader } from 'three';
+import Dashboard from './Dashboard';
+import Main from './Main';
+import Modal from '../components/Modal';
+import * as THREE from 'three'
+import Scene from '../components/Scene';
 
 const Wrapper=styled.div`
   height: 100vh;
@@ -198,7 +203,7 @@ const GraphTitle=styled.div`
   font-size: 16px;
 `
 
-const Energy = () => {
+const Detail = () => {
 
   const [dataState,setDataState]=useState(phData)
   const [clickState,setClickState]=useState('ph')
@@ -214,31 +219,37 @@ const Energy = () => {
   ];    
   const COLORSs = ['#8884d8', '#FFFFFF', '#FFBB28', '#FF8042'];
 
-  const fbx = useLoader(FBXLoader, 'waterplant.fbx')
-  function Scene() {
-    return <primitive object={fbx}  />
-  }
+
   function Loader() {
     const { progress } = useProgress()
     return <Html center>{progress} % loaded</Html>
   }
-  const texture=useLoader(TextureLoader,'rp_rp_BaseColor.png')
+  const [content,setContent]=useState()
+
+  const [meshArray,setMeshArray]=useState([])
+  const [wtOneArray,setWtOneArray]=useState([])
+  const [wtTwoArray,setWtTwoArray]=useState([])
+  const [wtThreeArray,setWtThreeArray]=useState([])
+  const [extraDongArray,setExtraDongArray]=useState([])
+  const [roadArray,setRoadArray]=useState([])
+  const [treeArray,setTreeArray]=useState([])
+
+  const func=useCallback((e)=>{
+    e.stopPropagation();
+  })
+
+
 
  
+  
   return (
     <Wrapper>
       <TopContentWrapper>
        <Wrap>
-       
+
        <ImageWrapper>
-
-       <Canvas>
-       <Suspense fallback={<Loader />}>
-        <Scene />
-        <OrbitControls />
-
-      </Suspense>
-      </Canvas>
+      
+   
        </ImageWrapper>
         <DonutChartWrapper>
           <TimeDonutWrapper>
@@ -378,4 +389,4 @@ stroke="none"
   )
 }
 
-export default Energy
+export default Detail
