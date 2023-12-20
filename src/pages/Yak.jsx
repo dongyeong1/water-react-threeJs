@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Yak = () => {
-  return (
-    <div>Yak</div>
-  )
-}
+  return <div>Yak</div>;
+};
 
-export default Yak
+export default Yak;
