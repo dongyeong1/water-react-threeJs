@@ -45,7 +45,7 @@ function App() {
     <>
       <div className="App">
         <BrowserRouter>
-          {/* <HeaderMenu></HeaderMenu> */}
+          <HeaderMenu></HeaderMenu>
           <SideMenu></SideMenu>
           <Suspense fallback={<Loader></Loader>}>
             <Routes>

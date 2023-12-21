@@ -314,12 +314,12 @@ export const Simulation = () => {
         <Calender />
         <Table>
           <TableInner>
-            {name.map((data) => (
-              <TableText>{data}</TableText>
+            {name.map((data, index) => (
+              <TableText key={index}>{data}</TableText>
             ))}
           </TableInner>
-          {value.map((data) => (
-            <TableChild>
+          {value.map((data, index) => (
+            <TableChild key={index}>
               <TableText>{data.time}</TableText>
               <TableText>{data.ppm}</TableText>
               <TableText>{data.ph}</TableText>

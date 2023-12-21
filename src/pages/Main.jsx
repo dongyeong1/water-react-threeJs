@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls, Html, useProgress } from "@react-three/drei";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
@@ -10,6 +10,9 @@ import Scene from "../components/Scene";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import Modal from "../components/Modal";
+import { useIsMobile } from "../hooks/useIsMobile";
+import { useOnClickOutside } from "../hooks/useOnClickOutside";
+import { useUpdateEffect } from "../hooks/useUpdateEffect";
 
 const Wrap = styled.div`
   width: 100%;
@@ -53,6 +56,11 @@ const Font = styled.div`
 `;
 
 const Main = ({}) => {
+  const isMobile = useIsMobile();
+  useEffect(() => {
+    console.log("ismobie", isMobile);
+  }, [isMobile]);
+
   const [rotateState, setRotateState] = useState(true);
 
   const [content, setContent] = useState();
@@ -75,16 +83,9 @@ const Main = ({}) => {
   const [gdgThreeArray, setGdgThreeArray] = useState([]);
   const [gdgFourArray, setGdgFourArray] = useState([]);
 
-  const [gdgGroupZero, setGdgGroupZero] = useState([]);
-
-  const [gdgGroupOne, setGdgGroupOne] = useState([]);
-  const [gdgGroupTwo, setGdgGroupTwo] = useState([]);
-  const [gdgGroupThree, setGdgGroupThree] = useState([]);
-
   const [visible, setVisible] = useState(false);
 
   const func = useCallback((e) => {
-    // setVisible(true);
     e.stopPropagation();
     setRotateState(false);
     setContent(e.object);
@@ -96,9 +97,7 @@ const Main = ({}) => {
     let groupArr = [];
     let gdgMeshArr = [];
     let gdgGroupArr = [];
-
-    console.log("cc", fbx.children[1]);
-
+    //지하공동구
     fbx.children[1].children[0].children.forEach((data, index) => {
       if (data.type === "Mesh") {
         gdgMeshArr.push(data);
@@ -118,6 +117,7 @@ const Main = ({}) => {
           gdgGroupArr = [...data.children];
           setGdgLlineArray(gdgGroupArr);
         } else if (data.name === "group226") {
+          console.log("dadada", data);
           console.log("group226", data.children);
           gdgGroupArr = [...data.children];
           setGdgOneArray(gdgGroupArr);
@@ -139,7 +139,7 @@ const Main = ({}) => {
         }
       }
     });
-
+    //지면 위
     fbx.children[0].children.forEach((data, index) => {
       if (data.type === "Mesh") {
         meshsArr.push(fbx.children[0].children[index]);
@@ -169,17 +169,24 @@ const Main = ({}) => {
   }, []);
 
   function Loader() {
-    const { progress } = useProgress();
     return (
       <Html center>
         <Font>loading...</Font>
       </Html>
     );
   }
+  useUpdateEffect(() => {
+    console.log("updpadpadpdapdap");
+  }, []);
+
+  const ref = useRef();
+  useOnClickOutside(ref, () => {
+    console.log("outttt");
+  });
 
   return (
     <Wrap>
-      <Wrapper>
+      <Wrapper ref={ref}>
         <Modal
           content={content}
           visible={visible}
@@ -199,7 +206,6 @@ const Main = ({}) => {
         >
           <Suspense fallback={<Loader></Loader>}>
             <Scene
-              fbx={fbx}
               func={func}
               content={content}
               roadArray={roadArray}
