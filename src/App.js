@@ -13,6 +13,8 @@ const LazyNotFound = React.lazy(() => import("./pages/NotFound"));
 const LazyMain = React.lazy(() => import("./pages/Main"));
 const LazySimulation = React.lazy(() => import("./pages/Simulation"));
 const LazyLogin = React.lazy(() => import("./pages/Login"));
+const LazyInput = React.lazy(() => import("./pages/Input"));
+const LazySignUp = React.lazy(() => import("./pages/SignUp"));
 
 const SpinWrapper = styled.div`
   width: auto;
@@ -58,7 +60,10 @@ function App() {
                 path="/simulation"
                 element={<LazySimulation></LazySimulation>}
               ></Route>
+              <Route path="/signup" element={<LazySignUp></LazySignUp>}></Route>
               <Route path="/login" element={<LazyLogin></LazyLogin>}></Route>
+              <Route path="/input" element={<LazyInput></LazyInput>}></Route>
+
               <Route path="*" element={<LazyNotFound></LazyNotFound>}></Route>
             </Routes>
           </Suspense>
