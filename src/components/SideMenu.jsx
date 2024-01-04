@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { keyframes, css } from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 const SideMenuWrapper = styled.div`
   padding: 60px 10px 10px 10px;
@@ -27,16 +26,6 @@ const SideMenuWrapper = styled.div`
 const HeaderWrapper = styled.header`
   display: flex;
   justify-content: space-between;
-`;
-const HeaderLogo = styled.div`
-  width: 50px;
-  height: 50px;
-`;
-
-const HeaderText = styled.div`
-  margin-right: 100px;
-  font-size: 13px;
-  width: 50px;
 `;
 
 const rotation = keyframes`
@@ -125,7 +114,6 @@ const LoginMenu = styled.div`
 
 const SideMenu = () => {
   const [closeMenu, setCloseMenu] = useState(true);
-  const navigate = useNavigate();
 
   const toMain = () => {
     window.location.replace("/");
@@ -138,8 +126,6 @@ const SideMenu = () => {
         closeMenu={closeMenu}
       >
         <HeaderWrapper>
-          {/* <HeaderLogo ></HeaderLogo> */}
-          {/* <HeaderText>{!closeMenu&&'수자원공사'}</HeaderText> */}
           <HeaderIcon
             closeMenu={closeMenu}
             onClick={() => setCloseMenu((prev) => !prev)}

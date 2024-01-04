@@ -5,12 +5,9 @@ import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { Suspense } from "react";
 import * as THREE from "three";
 import styled, { keyframes } from "styled-components";
-import Chart from "../components/Chart";
 import Scene from "../components/Scene";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
 import Modal from "../components/Modal";
-import { useIsMobile } from "../hooks/useIsMobile";
+import { useAxios } from "../hooks/useAxios";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
 import { useUpdateEffect } from "../hooks/useUpdateEffect";
 
@@ -56,11 +53,6 @@ const Font = styled.div`
 `;
 
 const Main = ({}) => {
-  const isMobile = useIsMobile();
-  useEffect(() => {
-    console.log("ismobie", isMobile);
-  }, [isMobile]);
-
   const [rotateState, setRotateState] = useState(true);
 
   const [content, setContent] = useState();
@@ -86,19 +78,28 @@ const Main = ({}) => {
   const [visible, setVisible] = useState(false);
 
   const func = useCallback((e) => {
+    //e가 선택된 객체정보
     e.stopPropagation();
     setRotateState(false);
     setContent(e.object);
   });
 
   const fbx = useLoader(FBXLoader, "waterplant.fbx");
+
+  useEffect(() => {
+    console.log("ffffffffffffffffffff", fbx);
+  }, [fbx]);
+
   useEffect(() => {
     let meshsArr = [];
     let groupArr = [];
     let gdgMeshArr = [];
     let gdgGroupArr = [];
+
     //지하공동구
-    fbx.children[1].children[0].children.forEach((data, index) => {
+
+    //open 지하공동구
+    fbx.children[1].children[3].children[0].children.forEach((data, index) => {
       if (data.type === "Mesh") {
         gdgMeshArr.push(data);
         setGdgMeshArray(gdgMeshArr);
@@ -108,7 +109,6 @@ const Main = ({}) => {
           setGdgBlineArray(gdgGroupArr);
         } else if (data.name === "H_line") {
           gdgGroupArr = [...data.children];
-
           setGdgHlineArray(gdgGroupArr);
         } else if (data.name === "J_line") {
           gdgGroupArr = [...data.children];
@@ -117,28 +117,55 @@ const Main = ({}) => {
           gdgGroupArr = [...data.children];
           setGdgLlineArray(gdgGroupArr);
         } else if (data.name === "group226") {
-          console.log("dadada", data);
-          console.log("group226", data.children);
           gdgGroupArr = [...data.children];
           setGdgOneArray(gdgGroupArr);
         } else if (data.name === "group232") {
-          console.log("group232", data.children);
-
           gdgGroupArr = [...data.children];
           setGdgTwoArray(gdgGroupArr);
         } else if (data.name === "group234") {
-          console.log("group234", data.children);
-
           gdgGroupArr = [...data.children];
           setGdgThreeArray(gdgGroupArr);
         } else if (data.name === "group235") {
-          console.log("group235", data.children);
-
           gdgGroupArr = [...data.children];
           setGdgFourArray(gdgGroupArr);
         }
       }
     });
+
+    // 일반 지하공동구
+    // fbx.children[1].children[0].children.forEach((data, index) => {
+    //   if (data.type === "Mesh") {
+    //     gdgMeshArr.push(data);
+    //     setGdgMeshArray(gdgMeshArr);
+    //   } else {
+    //     if (data.name === "B_line") {
+    //       gdgGroupArr = [...data.children];
+    //       setGdgBlineArray(gdgGroupArr);
+    //     } else if (data.name === "H_line") {
+    //       gdgGroupArr = [...data.children];
+    //       setGdgHlineArray(gdgGroupArr);
+    //     } else if (data.name === "J_line") {
+    //       gdgGroupArr = [...data.children];
+    //       setGdgJlineArray(gdgGroupArr);
+    //     } else if (data.name === "L_line") {
+    //       gdgGroupArr = [...data.children];
+    //       setGdgLlineArray(gdgGroupArr);
+    //     } else if (data.name === "group226") {
+    //       gdgGroupArr = [...data.children];
+    //       setGdgOneArray(gdgGroupArr);
+    //     } else if (data.name === "group232") {
+    //       gdgGroupArr = [...data.children];
+    //       setGdgTwoArray(gdgGroupArr);
+    //     } else if (data.name === "group234") {
+    //       gdgGroupArr = [...data.children];
+    //       setGdgThreeArray(gdgGroupArr);
+    //     } else if (data.name === "group235") {
+    //       gdgGroupArr = [...data.children];
+    //       setGdgFourArray(gdgGroupArr);
+    //     }
+    //   }
+    // });
+
     //지면 위
     fbx.children[0].children.forEach((data, index) => {
       if (data.type === "Mesh") {
@@ -175,18 +202,10 @@ const Main = ({}) => {
       </Html>
     );
   }
-  useUpdateEffect(() => {
-    console.log("updpadpadpdapdap");
-  }, []);
-
-  const ref = useRef();
-  useOnClickOutside(ref, () => {
-    console.log("outttt");
-  });
 
   return (
     <Wrap>
-      <Wrapper ref={ref}>
+      <Wrapper>
         <Modal
           content={content}
           visible={visible}
@@ -224,8 +243,8 @@ const Main = ({}) => {
               gdgTwoArray={gdgTwoArray}
               gdgThreeArray={gdgThreeArray}
               gdgFourArray={gdgFourArray}
+              fbx={fbx}
             />
-
             <OrbitControls autoRotate={rotateState} />
           </Suspense>
         </Canvas>

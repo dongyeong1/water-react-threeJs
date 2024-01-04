@@ -29,11 +29,6 @@ const AddButton = styled.div`
   height: 40px;
 `;
 
-const FirstForm = styled.div`
-  display: flex;
-  gap: 20px;
-`;
-
 const PhoneWrapper = styled.div`
   display: flex;
   margin-top: 10px;
@@ -104,7 +99,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      phoneNumber: [{ number: "11" }],
+      phoneNumber: [{ number: "010-4187-4588" }],
     },
   });
 
@@ -114,7 +109,6 @@ const SignUp = () => {
   });
 
   const onSubmit = (e) => {
-    // e.preventDefault();
     console.log(e);
   };
 
@@ -156,14 +150,16 @@ const SignUp = () => {
                 <CustomInput
                   {...register(`phoneNumber.${index}.number`)}
                 ></CustomInput>{" "}
-                <RemoveButton
-                  onClick={(e) => {
-                    remove(index);
-                    console.log(index);
-                  }}
-                >
-                  삭제
-                </RemoveButton>
+                {index > 0 && (
+                  <RemoveButton
+                    onClick={(e) => {
+                      remove(index);
+                      console.log(index);
+                    }}
+                  >
+                    삭제
+                  </RemoveButton>
+                )}
               </PhoneWrapper>
             );
           })}

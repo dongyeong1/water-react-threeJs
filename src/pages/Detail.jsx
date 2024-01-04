@@ -117,7 +117,6 @@ const OneText = styled.div`
   gap: 5px;
 `;
 const ButtonWrapper = styled.div`
-  /* background-color: red; */
   position: absolute;
   top: 5%;
   right: 1%;
@@ -190,13 +189,6 @@ const TextContent = styled.div`
   margin-left: 20px;
 `;
 
-const Title = styled.div`
-  color: white;
-  position: absolute;
-  top: -15%;
-  left: 0%;
-  font-size: 13px;
-`;
 const GraphTitle = styled.div`
   color: white;
   position: absolute;
@@ -217,7 +209,7 @@ const Detail = () => {
     { name: "Group A", value: 770 },
     { name: "Group B", value: 230 },
   ];
-  const COLORSs = ["#8884d8", "#FFFFFF", "#FFBB28", "#FF8042"];
+  const COLORS = ["#8884d8", "#FFFFFF"];
 
   return (
     <Wrapper>
@@ -242,17 +234,12 @@ const Detail = () => {
                     data={pieData}
                     innerRadius={70}
                     outerRadius={90}
-                    fill="#8884d8"
                     paddingAngle={0}
                     dataKey="value"
-                    // values="400"
                     stroke="none"
                   >
                     {pieData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORSs[index % COLORSs.length]}
-                      />
+                      <Cell key={`cell-${index}`} fill={COLORS[index]} />
                     ))}
                     <Label
                       style={{ fontSize: 35, fill: "white", fontWeight: 600 }}
@@ -280,16 +267,12 @@ const Detail = () => {
                     data={pieDatas}
                     innerRadius={70}
                     outerRadius={90}
-                    fill="#8884d8"
                     paddingAngle={0}
                     dataKey="value"
                     stroke="none"
                   >
                     {pieDatas.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORSs[index % COLORSs.length]}
-                      />
+                      <Cell key={`cell-${index}`} fill={COLORS[index]} />
                     ))}
                     <Label
                       style={{ fontSize: 35, fill: "white", fontWeight: 600 }}
@@ -306,7 +289,6 @@ const Detail = () => {
       <Wrappers>
         <BottomContentWrapper>
           <GraphTitle>성분 데이터</GraphTitle>
-
           <ButtonWrapper clickState={clickState}>
             <button
               className="ph"
@@ -371,10 +353,8 @@ const Detail = () => {
             }}
           >
             <XAxis dataKey="name" />
-            <YAxis domain={["auto", "auto"]} />
-
+            <YAxis domain={["auto"]} />
             <Bar dataKey="uv" barSize={20} fill="#413ea0" />
-
             <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
           </ComposedChart>
         </BottomContentWrapper>

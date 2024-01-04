@@ -9,7 +9,6 @@ const HeaderWrapper = styled.div`
   width: 100%;
   height: 80px;
   background-color: transparent;
-  /* opacity: 0.1; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,7 +18,6 @@ const HeaderWrapper = styled.div`
 
 const HeaderTitle = styled.div`
   cursor: pointer;
-
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

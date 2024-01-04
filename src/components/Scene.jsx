@@ -18,6 +18,7 @@ const NameWrapper = styled.div`
 
 const Scene = React.memo(
   ({
+    fbx,
     func,
     content,
     roadArray,
@@ -88,6 +89,9 @@ const Scene = React.memo(
     const textureLoader = new THREE.TextureLoader();
 
     const gdgTexture = textureLoader.load("img/gdg_BaseColor.png");
+    const pipeTexture = textureLoader.load(
+      "img/trees_trees dark green_BaseColor.png"
+    );
 
     const treeTexture = ([tree_dark_green, tree_green, tree_yellow, tree_red] =
       useLoader(THREE.TextureLoader, [
@@ -188,12 +192,75 @@ const Scene = React.memo(
       "img/trees_trees green_BaseColor.png",
     ]));
 
-    useEffect(() => {
-      console.log("gdgOnearraty", gdgOneArray);
-    }, [gdgOneArray]);
-
     return (
       <mesh scale={0.3}>
+        {/* 파이프  -파이프 텍스처는 gnit에서 받으면 바꿔야함 현재는 나무텍스처로 되어있음- */}
+        {fbx?.children[1]?.children[2]?.children[0]?.children?.map((v) => (
+          <primitive
+            key={v.ID}
+            object={v}
+            material={new THREE.MeshBasicMaterial({ map: pipeTexture })}
+          />
+        ))}
+        {fbx?.children[1]?.children[2]?.children[1]?.children?.map((v) => (
+          <primitive
+            key={v.ID}
+            object={v}
+            material={new THREE.MeshBasicMaterial({ map: pipeTexture })}
+          />
+        ))}
+        {fbx?.children[1]?.children[2]?.children[2]?.children?.map((v) => (
+          <primitive
+            key={v.ID}
+            object={v}
+            material={new THREE.MeshBasicMaterial({ map: pipeTexture })}
+          />
+        ))}
+        {fbx?.children[1]?.children[2]?.children[2]?.children[0]?.children?.map(
+          (v) => (
+            <primitive
+              key={v.ID}
+              object={v}
+              material={new THREE.MeshBasicMaterial({ map: pipeTexture })}
+            />
+          )
+        )}
+        {fbx?.children[1]?.children[2]?.children[2]?.children[1]?.children?.map(
+          (v) => (
+            <primitive
+              key={v.ID}
+              object={v}
+              material={new THREE.MeshBasicMaterial({ map: pipeTexture })}
+            />
+          )
+        )}
+        {fbx?.children[1]?.children[2]?.children[2]?.children[6]?.children?.map(
+          (v) => (
+            <primitive
+              key={v.ID}
+              object={v}
+              material={new THREE.MeshBasicMaterial({ map: pipeTexture })}
+            />
+          )
+        )}
+        {fbx?.children[1]?.children[2]?.children[3]?.children?.map((v) => (
+          <primitive
+            key={v.ID}
+            object={v}
+            material={new THREE.MeshBasicMaterial({ map: pipeTexture })}
+          />
+        ))}
+        {fbx?.children[1]?.children[2]?.children[3]?.children[2]?.children?.map(
+          (v) => (
+            <primitive
+              key={v.ID}
+              object={v}
+              material={new THREE.MeshBasicMaterial({ map: pipeTexture })}
+            />
+          )
+        )}
+        {/*지면위*/}
+
         {treeArray?.map((v, index) => (
           <primitive
             key={v.ID}
@@ -354,20 +421,18 @@ const Scene = React.memo(
             material={new THREE.MeshBasicMaterial({ map: roadTexture[index] })}
           />
         ))}
+        {/* 지하공동구 */}
         {gdgMeshArray?.map((v) => (
           <primitive
             key={v.ID}
             object={v}
-            onClick={(e) => func(e)}
             material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
           />
         ))}
-
         {gdgFourArray?.map((v) => (
           <primitive
             key={v.ID}
             object={v}
-            onClick={(e) => func(e)}
             material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
           />
         ))}
@@ -375,7 +440,6 @@ const Scene = React.memo(
           <primitive
             key={v.ID}
             object={v}
-            onClick={(e) => func(e)}
             material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
           />
         ))}
@@ -383,18 +447,15 @@ const Scene = React.memo(
           <primitive
             key={v.ID}
             object={v}
-            onClick={(e) => func(e)}
             material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
           />
         ))}
-
         {gdgOneArray?.map((data, index) => {
           if (data.type === "Mesh") {
             return (
               <primitive
                 key={data.ID}
                 object={data}
-                onClick={(e) => func(e)}
                 material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
               />
             );
@@ -406,19 +467,16 @@ const Scene = React.memo(
               <primitive
                 key={data.ID}
                 object={data}
-                onClick={(e) => func(e)}
                 material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
               />
             );
           }
         })}
-
         {gdgOneArray[0]?.children[3]?.children.map((data) => {
           return (
             <primitive
               key={data.ID}
               object={data}
-              onClick={(e) => func(e)}
               material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
             />
           );
@@ -428,7 +486,6 @@ const Scene = React.memo(
             <primitive
               key={data.ID}
               object={data}
-              onClick={(e) => func(e)}
               material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
             />
           );
@@ -438,19 +495,16 @@ const Scene = React.memo(
             <primitive
               key={data.ID}
               object={data}
-              onClick={(e) => func(e)}
               material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
             />
           );
         })}
-
         {gdgOneArray[2]?.children?.map((data) => {
           if (data.type === "Mesh") {
             return (
               <primitive
                 key={data.ID}
                 object={data}
-                onClick={(e) => func(e)}
                 material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
               />
             );
@@ -461,17 +515,14 @@ const Scene = React.memo(
             <primitive
               key={data.ID}
               object={data}
-              onClick={(e) => func(e)}
               material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
             />
           );
         })}
-
         {gdgLlineArray?.map((v) => (
           <primitive
             key={v.ID}
             object={v}
-            onClick={(e) => func(e)}
             material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
           />
         ))}
@@ -479,30 +530,25 @@ const Scene = React.memo(
           <primitive
             key={v.ID}
             object={v}
-            onClick={(e) => func(e)}
             material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
           />
         ))}
-
         {gdgBlineArray?.map((data) => {
           if (data.type === "Mesh") {
             return (
               <primitive
                 key={data.ID}
                 object={data}
-                onClick={(e) => func(e)}
                 material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
               />
             );
           }
         })}
-
         {gdgBlineArray[4]?.children.map((data) => {
           return (
             <primitive
               key={data.ID}
               object={data}
-              onClick={(e) => func(e)}
               material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
             />
           );
@@ -511,7 +557,6 @@ const Scene = React.memo(
           <primitive
             key={v.ID}
             object={v}
-            onClick={(e) => func(e)}
             material={new THREE.MeshBasicMaterial({ map: gdgTexture })}
           />
         ))}
